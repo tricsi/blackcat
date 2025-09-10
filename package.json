@@ -1,0 +1,32 @@
+{
+    "name": "js13kskeleton",
+    "version": "1.0.0",
+    "description": "js13kgames skeleton",
+    "repository": "https://github.com/tricsi/spacerun",
+    "author": "@CsabaCsecskedi",
+    "license": "MIT",
+    "scripts": {
+        "start": "node bin/esbuild.js",
+        "build": "node bin/esbuild.js && node bin/roadroller.js && cd build && node ../bin/zip",
+        "sprite": "node bin/spritesmith"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.23.0",
+        "ect-bin": "^1.4.1",
+        "esbuild": "^0.25.8",
+        "esbuild-plugin-glsl": "^1.2.2",
+        "eslint": "^9.23.0",
+        "glob": "^10.4.2",
+        "globals": "^16.0.0",
+        "html-minifier": "^4.0.0",
+        "roadroller": "^2.1.0",
+        "spritesmith": "^3.5.1",
+        "tslib": "^2.6.3",
+        "typescript": "^5.5.3",
+        "typescript-eslint": "^8.28.0"
+    },
+    "volta": {
+        "node": "20.10.0",
+        "npm": "10.2.5"
+    }
+}
