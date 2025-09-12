@@ -115,7 +115,7 @@ export function timer(
  */
 export function kill(props: TTimerToken, force = false) {
     props[1] = 1
-    force && unschedule(props[2])
+    props[2] && force && unschedule(props[2])
 }
 
 on("visibilitychange", () => DOC.hidden || reset(), DOC)
