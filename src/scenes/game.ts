@@ -1,5 +1,5 @@
 import { EVENT_DEATH, EVENT_HIT, EVENT_JUMP, EVENT_SCORE, EVENT_START, SPRITE_CLOUD } from "../config"
-import { audio, mixer, music, play, sound, wave } from "../modules/audio"
+import { audio, mixer, music, play, sound, TSoundProps, wave } from "../modules/audio"
 import { getPosition, setPosition } from "../modules/entity/components/transform"
 import { addChild, createEntity, TEntity } from "../modules/entity/entity"
 import { off, on, TEvent } from "../modules/event"
@@ -49,8 +49,8 @@ async function onClick() {
     await audio(22050)
     const chip = wave((n) => (4 / (n * Math.PI)) * Math.sin(Math.PI * n * 0.18))
     await sound(EVENT_HIT, [chip, .3, [.5, 0]], [440, 880, 440, 220])
-    await sound(EVENT_JUMP, ["custom", 0.1, [0, .4, 0]], [220, 440 ])
-    await sound(EVENT_SCORE, ["sine", 0.2, [2, .4, 0]], [110, 15, 0])
+    await sound(EVENT_JUMP, ["custom", 0.1, [.2, .4, 0]], [220, 440 ])
+    await sound(EVENT_SCORE, ["sine", 0.1, [.5, 0]], [220, 110, 0])
     await music("theme", [
         [[chip, .3, [.3, .1]],
             "8|2|" +
@@ -60,8 +60,8 @@ async function onClick() {
             "1b2,1b2,1db3,1b2,1d3,1b2,1e3,1eb3|1|" +
             "1a2,1a2,1b2,1a2,1c3,1a2,1d3,1db3|1"
             , .2],
-        [["custom", .2, [2, .2, 0]], "2,1a2,3,1a2,1a2|12", .2],
-        [["sine", .2, [2, .4, 0]], "1a1,3,1a1,3|12", .2]
+        [["custom", .2, [1, .2, 0]], "2,1a2,3,1a2,1a2|12", .2],
+        [["sine", .2, [1, .2, 0]], "1a1,3,1a1,3|12", .2]
     ]);
 
     on("visibilitychange", onVisibility, DOC)

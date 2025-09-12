@@ -23,9 +23,6 @@ const UV = new Float32Array(SIZE * 6)
 const POS = new Float32Array(SIZE * 6)
 const TINT = new Float32Array(SIZE * 12)
 const PROJ: Float32Array = m3()
-// const LIGHTS: number = 8
-// const LIGHT = new Float32Array(LIGHTS * 4)
-// const COLOR = new Float32Array(LIGHTS * 4)
 const DPR = devicePixelRatio
 
 let GL: WebGL2RenderingContext,
@@ -33,16 +30,6 @@ let GL: WebGL2RenderingContext,
     RES: number[],
     COUNT: number = 0,
     DATA: TSpritesheet
-
-
-// export function setLight(data: number[], rgba: number[] = [1, 1, 1, 1], index: number = 0) {
-//     LIGHT.set(data, index * 4)
-//     COLOR.set(rgba, index * 4)
-// }
-// export function clearLights() {
-//     LIGHT.fill(0)
-//     COLOR.fill(1)
-// }
 
 export function createContext(
     canvas: HTMLCanvasElement,
@@ -77,8 +64,6 @@ export function createContext(
 export function renderContext(clear = true) {
     setUniform(GL, PRG, "uRes", new Float32Array([GL.canvas.width, GL.canvas.height]))
     setUniform(GL, PRG, "uProj", PROJ as Float32Array)
-    // setUniform(GL, PRG, "uLight", LIGHT, 4)
-    // setUniform(GL, PRG, "uColor", COLOR, 4)
     bindBuffer(GL, "aUv", UV)
     setAttribute(GL, PRG, "aUv", 2)
     bindBuffer(GL, "aPos", POS)

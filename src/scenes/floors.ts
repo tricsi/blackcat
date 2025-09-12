@@ -112,7 +112,7 @@ function update() {
             lastFloor = max(x + width, lastFloor)
         }
     }
-    if (lastFloor < 196) {
+    if (lastFloor < 196 && floorAdd) {
         startPower()
     }
     while (lastFloor < 196 && floorAdd) {

@@ -277,8 +277,6 @@ export async function audio(bitrate = 44100, ctx = new AudioContext()) {
 
     const a = pow(2, 1 / 12)
     for (let n = -57; n < 50; n++) {
-        const value = pow(a, n) * 440
-        const digit = pow(10, 7 - value.toFixed().length)
-        FREQ.push(round(value * digit) / digit)
+        FREQ.push(pow(a, n) * 440)
     }
 }
