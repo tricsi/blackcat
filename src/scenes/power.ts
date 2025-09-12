@@ -51,7 +51,6 @@ const letters = "CAT"
 
 let letterIndex = 0
 let skipToken: TTimerToken
-let triggered = true
 
 export function initPower() {
     setHandler(LAYER_POWER, powerHandler)
@@ -60,7 +59,7 @@ export function initPower() {
 }
 
 export async function startPower() {
-    if (triggered || skipToken) return
+    if (skipToken) return
     setText(text, letters[letterIndex])
     setData(power, letterIndex)
     setSpeed(power, -50)
@@ -90,28 +89,27 @@ async function powerHandler(res: IResponse) {
                 setAlpha(power, tt)
                 setPosition(power, x * tt, (y + 50) * tt - 50)
             },
-            1,
+            0,
             skipToken
         )
-        skipToken = null
         const index = getData(power, 0)
         collected.add(index)
-        triggered = letters.length === collected.size
+        const triggered = letters.length === collected.size
         emit(EVENT_COLLECT, [collected, triggered])
         if (triggered) {
-            await timer(7)
+            await timer(7, undefined, 0, skipToken)
             resetPower()
         }
+        skipToken = null
     }
 }
 
 function resetPower() {
-    letterIndex = 0
-    triggered = false
-    collected.clear()
     skipToken && kill(skipToken, true)
     skipToken = null
+    letterIndex = 0
+    collected.clear()
     setSpeed(power, 0)
     setPosition(power, ...startPos)
-    emit(EVENT_COLLECT, [collected, triggered])
+    emit(EVENT_COLLECT, [collected, false])
 }
