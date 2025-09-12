@@ -2,7 +2,7 @@
 Black Bird and his gang captured Kitty.
 Black Cat has only one minute left to save her.
 The roof is full of dangers and getting hot.
-Hurry and catch Black Bird!
+Run till the end and catch Black Bird!
 
 ## TIPS
 - Clear obstacles and earn points.
