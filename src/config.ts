@@ -11,6 +11,7 @@ export const FONT_REGULAR = createSprite("font", 5, 7)
 export const FONT_TINY = createSprite("tiny", 3, 5)
 export const CENTER = [96, 54]
 export const CONTROLS = ["Space", "Mouse0"]
+export const GAME_TIME = 60
 
 export const COLOR_TRANSPARENT = [0, 0, 0, 0]
 export const COLOR_BLACK = [0, 0, 0, 1]
@@ -19,6 +20,7 @@ export const COLOR_DARK = [0.3, 0.3, 0.3]
 export const COLOR_LIGHT = [0.7, 0.7, 0.7]
 export const COLOR_RED = [1, 0, 0]
 export const COLOR_DEBUG = [0, 1, 1, 0.5]
+export const COLOR_END = [0.02, 0.2, 0.22, 1]
 
 export const LAYER_PLAYER = 1
 export const LAYER_WALL = 2

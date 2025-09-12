@@ -2,13 +2,17 @@ import { kill, TTimerToken } from "../modules/scheduler"
 import { getAlpha } from "../modules/entity/components/color"
 import {
     COLOR_BLACK,
+    COLOR_END,
     EVENT_BOSS,
     EVENT_COLLECT,
     EVENT_DEATH,
     EVENT_SCORE,
     EVENT_START,
     FONT_REGULAR,
-    FONT_TINY
+    FONT_TINY,
+    GAME_TIME,
+    SPRITE_CAT,
+    SPRITE_WALL
 } from "../config"
 import { setAlpha } from "../modules/entity/components/color"
 import { setText } from "../modules/entity/components/text"
@@ -20,7 +24,6 @@ import { ceil, max } from "../modules/math"
 import { storage } from "../modules/utils"
 
 const name = "Black Cat"
-const end = "Game Over"
 const hud: TEntity = createEntity([
     "hud",
     ,
@@ -51,13 +54,6 @@ const hud: TEntity = createEntity([
             ,
             [
                 [
-                    "text",
-                    {
-                        t: [, , 2],
-                        x: [FONT_REGULAR, end, 1, 1]
-                    }
-                ],
-                [
                     "high",
                     {
                         t: [, [0, -52], 0.7],
@@ -65,11 +61,71 @@ const hud: TEntity = createEntity([
                     }
                 ],
                 [
-                    "poly",
-                    {
-                        p: [[-100, -100, 200, 200]],
-                        c: COLOR_BLACK
-                    }
+                    "end",
+                    ,
+                    [
+                        [
+                            "text",
+                            {
+                                t: [, [0, -20], 2],
+                                x: [FONT_REGULAR, "The End", 1, 1]
+                            }
+                        ],
+                        [
+                            "cat1",
+                            {
+                                t: [[], [-25, 5]],
+                                s: SPRITE_CAT,
+                                c: COLOR_BLACK
+                            }
+                        ],
+                        [
+                            "cat2",
+                            {
+                                t: [[], [25, 5], [-1, 1]],
+                                s: SPRITE_CAT
+                            }
+                        ],
+                        [
+                            "floor",
+                            {
+                                t: [, [-52, 24]],
+                                m: [
+                                    SPRITE_WALL,
+                                    "AbaCDeaFDeaFDEGh1IEGh1IEFDEJk1LEJk1LEFDEJk1LEJk1LEF",
+                                    13,
+                                    6
+                                ]
+                            }
+                        ],
+                        [
+                            "poly",
+                            {
+                                p: [[-100, -100, 200, 200]],
+                                c: COLOR_END
+                            }
+                        ]
+                    ]
+                ],
+                [
+                    "game",
+                    ,
+                    [
+                        [
+                            "text",
+                            {
+                                t: [, , 2],
+                                x: [FONT_REGULAR, "Game Over", 1, 1]
+                            }
+                        ],
+                        [
+                            "poly",
+                            {
+                                p: [[-100, -100, 200, 200]],
+                                c: COLOR_BLACK
+                            }
+                        ]
+                    ]
                 ]
             ]
         ],
@@ -121,7 +177,8 @@ const overlay = getChild(hud, "overlay")
 const timeText = getChild(hud, "time")
 const scoreText = getChild(hud, "score")
 const powerText = getChild(logo, "power")
-const overlayText = getChild(overlay, "text")
+const overlayEnd = getChild(overlay, "end")
+const overlayGame = getChild(overlay, "game")
 const highText = getChild(overlay, "high")
 
 let skipToken: TTimerToken
@@ -172,16 +229,18 @@ function update(delta: number) {
 }
 
 async function onStart() {
-    time = 60
+    setAlpha(overlayEnd, 0)
+    setAlpha(overlayGame, 1)
+    setScore(0)
+    time = GAME_TIME
     skipToken && kill(skipToken, true)
+    schedule(update)
     const overlayAlpha = getAlpha(overlay)
     await timer(0.3, (t) => {
         const tt = 1 - t
         setAlpha(press, tt)
         overlayAlpha && setAlpha(overlay, tt)
     })
-    schedule(update)
-    setText(overlayText, end)
 }
 
 async function onDeath() {
@@ -225,5 +284,6 @@ function onCollect([[collected]]: TEvent<[Set<number>]>) {
 }
 
 function onBoss() {
-    setText(overlayText, "The End")
+    setAlpha(overlayEnd, 1)
+    setAlpha(overlayGame, 0)
 }
